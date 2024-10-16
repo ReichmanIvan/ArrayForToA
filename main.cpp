@@ -5,58 +5,8 @@
 
 using namespace std;
 
-void quicksorting(int* array, int N)
-{
-    //Указатели в начало и в конец массива
-    int i = 0;
-    int j = N - 1;
-
-    //Центральный элемент массива
-    int mid = array[N / 2];
-
-    //Делим массив
-    do
-    {
-        //Пробегаем элементы, ищем те, которые нужно перекинуть в другую часть
-        //В левой части массива пропускаем(оставляем на месте) элементы, которые меньше центрального
-        while (array[i] < mid)
-        {
-            i++;
-        }
-        //В правой части пропускаем элементы, которые больше центрального
-        while (array[j] > mid)
-        {
-            j--;
-        }
-
-        //Меняем элементы местами
-        if (i <= j)
-        {
-            int tmp = array[i];
-            array[i] = array[j];
-            array[j] = tmp;
-
-            i++;
-            j--;
-        }
-    }
-
-    while (i <= j);
-
-
-    //Рекурсивные вызовы, если осталось, что сортировать
-    if (j > 0)
-    {
-        //"Левый кусок"
-        quicksorting(array, j + 1);
-    }
-
-    if (i < N)
-    {
-        //"Првый кусок"
-        quicksorting(&array[i], N - i);
-    }
-}
+void quickSort(int array[], int low, int high);
+int partition(int array[], int low, int high);
 
 int main()
 {
@@ -64,68 +14,92 @@ int main()
     const int N = 10;
     int array[N] = {};
     srand(time(NULL));
+
     cout << "Изначальный массив:\n";
-    for (int i = 0; i < 9; i++)
+    for (int i = 0; i < N; i++)
     {
         array[i] = 0 + rand() % 9;
         cout << array[i] << '\t';
     }
     cout << "\n";
 
-    /* (1)bubble
-    for (int i = 0; i < 9; i++)
+    // (1) Пузырьковая сортировка
+    for (int i = 0; i < N - 1; i++)
     {
-      for (int j = 0; j < 9; j++)
-      {
-        if (array[j] > array[j + 1])
+        for (int j = 0; j < N - 1; j++)
         {
-          int b = array[j];
-          array[j] = array[j + 1];
-          array[j + 1] = b;
+            if (array[j] > array[j + 1])
+            {
+                int b = array[j];
+                array[j] = array[j + 1];
+                array[j + 1] = b;
+            }
         }
-      }
     }
-    cout << "\n";
 
-    cout << "Массив в отсортированном виде:\n";
-    for (int i = 0; i < 9; i++)
+    cout << "Массив после пузырьковой сортировки:\n";
+    for (int i = 0; i < N; i++)
     {
-      cout << array[i] << "\t";
-
+        cout << array[i] << "\t";
     }
     cout << "\n";
-    */
 
-    /*(2)
+    // (2) Сортировка вставками
     int buff = 0;
     int i, j;
     for (i = 1; i < N; i++)
     {
-      buff = array[i]; // запомним обрабатываемый элемент
-      // и начнем перемещение элементов слева от него
-      // пока запомненный не окажется меньше чем перемещаемый
-      for (j = i - 1; j >= 0 && array[j] > buff; j--)
-        array[j + 1] = array[j];
-
-      array[j + 1] = buff; // и поставим запомненный на его новое место
+        buff = array[i]; // запомним обрабатываемый элемент
+        for (j = i - 1; j >= 0 && array[j] > buff; j--)
+            array[j + 1] = array[j];
+        array[j + 1] = buff; // поставим запомненный элемент на его место
     }
 
-    cout << "Массив после вставки:\n";
-    for (int i = 1; i < N; i++)
-    {
-      // вывод отсортированного массива
-      cout << array[i] << '\t';
-    }
-    */
-
-    //(3)
-    quicksorting(array, N);
-    cout << "Массив после быстрой сортировки:\n";
-    for (int i = 0; i < 9; i++)
+    cout << "Массив после сортировки вставками:\n";
+    for (int i = 0; i < N; i++)
     {
         cout << array[i] << "\t";
-
     }
     cout << "\n";
+
+    // (3) Быстрая сортировка
+    quickSort(array, 0, N - 1);
+
+    cout << "Массив после быстрой сортировки:\n";
+    for (int i = 0; i < N; i++)
+    {
+        cout << array[i] << "\t";
+    }
+    cout << "\n";
+
     return 0;
+}
+
+// Функция быстрой сортировки
+void quickSort(int array[], int low, int high)
+{
+    if (low < high)
+    {
+        int pi = partition(array, low, high); // Разбиение массива
+        quickSort(array, low, pi - 1); // Сортировка левой части
+        quickSort(array, pi + 1, high); // Сортировка правой части
+    }
+}
+
+// Функция разбиения массива
+int partition(int array[], int low, int high)
+{
+    int pivot = array[high]; // Выбираем последний элемент как опорный
+    int i = (low - 1); // Индекс меньшего элемента
+
+    for (int j = low; j <= high - 1; j++)
+    {
+        if (array[j] <= pivot)
+        {
+            i++;
+            swap(array[i], array[j]);
+        }
+    }
+    swap(array[i + 1], array[high]);
+    return (i + 1);
 }
