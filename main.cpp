@@ -18,7 +18,7 @@ int main()
     cout << "Изначальный массив:\n";
     for (int i = 0; i < N; i++)
     {
-        array[i] = 0 + rand() % 9;
+        array[i] = 0 + rand() % 10000;
         cout << array[i] << '\t';
     }
     cout << "\n";
