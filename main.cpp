@@ -11,12 +11,12 @@ int partition(int array[], int low, int high);
 int main()
 {
     setlocale(LC_ALL, "Russian");
-    const int N = 10;
+    const size_t N = 10;
     int array[N] = {};
     srand(time(NULL));
 
     cout << "Изначальный массив:\n";
-    for (int i = 0; i < N; i++)
+    for (size_t i = 0; i < N; i++)
     {
         array[i] = 0 + rand() % 10000;
         cout << array[i] << '\t';
@@ -24,9 +24,9 @@ int main()
     cout << "\n";
 
     // (1) Пузырьковая сортировка
-    for (int i = 0; i < N - 1; i++)
+    for (size_t i = 0; i < N - 1; i++)
     {
-        for (int j = 0; j < N - 1; j++)
+        for (size_t j = 0; j < N - 1; j++)
         {
             if (array[j] > array[j + 1])
             {
@@ -38,7 +38,7 @@ int main()
     }
 
     cout << "Массив после пузырьковой сортировки:\n";
-    for (int i = 0; i < N; i++)
+    for (size_t i = 0; i < N; i++)
     {
         cout << array[i] << "\t";
     }
@@ -46,7 +46,7 @@ int main()
 
     // (2) Сортировка вставками
     int buff = 0;
-    int i, j;
+    int i, j = 0;
     for (i = 1; i < N; i++)
     {
         buff = array[i]; // запомним обрабатываемый элемент
@@ -60,11 +60,10 @@ int main()
     {
         cout << array[i] << "\t";
     }
-    cout << "\n";
 
     // (3) Быстрая сортировка
     quickSort(array, 0, N - 1);
-
+    cout << "\n";
     cout << "Массив после быстрой сортировки:\n";
     for (int i = 0; i < N; i++)
     {
