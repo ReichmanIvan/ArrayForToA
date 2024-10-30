@@ -11,7 +11,7 @@ int partition(int array[], int low, int high);
 int main()
 {
     setlocale(LC_ALL, "Russian");
-    const size_t N = 10;
+    const size_t N = 10000;
     int array[N] = {};
     srand(time(NULL));
 
@@ -30,7 +30,7 @@ int main()
         {
             if (array[j] > array[j + 1])
             {
-                int b = array[j];
+                size_t b = array[j];
                 array[j] = array[j + 1];
                 array[j + 1] = b;
             }
@@ -45,8 +45,8 @@ int main()
     cout << "\n";
 
     // (2) Сортировка вставками
-    int buff = 0;
-    int i, j = 0;
+    size_t buff = 0;
+    size_t i, j = 0;
     for (i = 1; i < N; i++)
     {
         buff = array[i]; // запомним обрабатываемый элемент
@@ -56,7 +56,7 @@ int main()
     }
 
     cout << "Массив после сортировки вставками:\n";
-    for (int i = 0; i < N; i++)
+    for (size_t i = 0; i < N; i++)
     {
         cout << array[i] << "\t";
     }
@@ -65,7 +65,7 @@ int main()
     quickSort(array, 0, N - 1);
     cout << "\n";
     cout << "Массив после быстрой сортировки:\n";
-    for (int i = 0; i < N; i++)
+    for (size_t i = 0; i < N; i++)
     {
         cout << array[i] << "\t";
     }
