@@ -45,14 +45,14 @@ int main()
     cout << "\n";
 
     // (2) Сортировка вставками
-    size_t buff = 0;
-    size_t i, j = 0;
-    for (i = 1; i < N; i++)
+    for (size_t i = 1; i < N; i++)
     {
-        buff = array[i]; // запомним обрабатываемый элемент
-        for (j = i - 1; j >= 0 && array[j] > buff; j--)
+        int buff = array[i]; // запомним обрабатываемый элемент
+        for (size_t j = i - 1; j >= 0 && array[j] > buff; j--)
+        {
             array[j + 1] = array[j];
-        array[j + 1] = buff; // поставим запомненный элемент на его место
+            array[j + 1] = buff; // поставим запомненный элемент на его место
+        }
     }
 
     cout << "Массив после сортировки вставками:\n";
